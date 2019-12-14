@@ -45,5 +45,10 @@
 {% else %}
   <p>No posts are available.</p>
 {% endif %}
+<h1>Search for a topic</h1>
+  <form  action = "search/" method = "post">
+    {% csrf_token %}
+    <input type = "search">
+  </form>
 </div>
 {% endblock %}

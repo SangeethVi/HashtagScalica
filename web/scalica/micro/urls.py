@@ -10,5 +10,8 @@ urlpatterns = [
     url(r'^post/$', views.post, name='post'),
     url(r'^follow/$', views.follow, name='follow'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^subscribe/$', views.subscribe, name ='subscribe'),
+    url(r'^search/$', views.search, name = 'search'),
+    url(r'^home/search/$', views.search, name = 'search'),
     url('^', include('django.contrib.auth.urls'))
 ]

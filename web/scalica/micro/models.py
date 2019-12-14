@@ -24,6 +24,22 @@ class Following(models.Model):
   def __str__(self):
     return self.follower.username + "->" + self.followee.username
 
+class Topic(models.Model):
+  topic = models.CharField(max_length = 256, default = '')
+  post = models.ForeignKey(Post)
+
+class Subscription(models.Model):
+  user = models.ForeignKey(settings.AUTH_USER_MODEL)
+  topic = models.ForeignKey(Topic)
+
+class UserPosts(models.Model):
+  user = models.ForeignKey(settings.AUTH_USER_MODEL)
+  post = models.ForeignKey(Post)
+
+class UserSubscription(models.Model):
+  user = models.ForeignKey(settings.AUTH_USER_MODEL)
+  post = models.ForeignKey(Post)
+
 # Model Forms
 class PostForm(ModelForm):
   class Meta:
@@ -37,6 +53,11 @@ class FollowingForm(ModelForm):
   class Meta:
     model = Following
     fields = ('followee',)
+
+class SubscribeForm(ModelForm):
+  class Meta:
+    model = Subscription
+    fields = ('topic',)
 
 class MyUserCreationForm(UserCreationForm):
   class Meta(UserCreationForm.Meta):

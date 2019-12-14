@@ -1,0 +1,13 @@
+{% extends "micro/base.html" %}
+{% block content %}
+{% if found %}
+  {% for topic in found %}
+    <li>
+        {{topic.post}}
+    </li>
+  {% endfor %}
+{% else %}
+  <h1>There are no topics by that name. Try again?</h1>
+{% endif %}
+
+{% endblock %}
