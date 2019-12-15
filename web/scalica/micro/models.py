@@ -61,7 +61,9 @@ class SubscribeForm(ModelForm):
     exclude = ('user',)
     def __init__(self, *args, **kwargs):
          super(SubscribeForm, self).__init__(*args, **kwargs)
-         self.fields['topic']=forms.ModelChoiceField(queryset=Topic.objects)
+         self.fields['topic']=forms.ModelChoiceField(queryset=Topic.objects.all())
+    def __unicode__(self):
+	return str(self.topic.topic)	
 
 class MyUserCreationForm(UserCreationForm):
   class Meta(UserCreationForm.Meta):
