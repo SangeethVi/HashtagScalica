@@ -19,11 +19,19 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-mycursor.execute("select topic from micro_topic limit 100000")
-topicList=[]
+mycursor.execute("select topic_id from micro_topic_posts limit 100000")
+topicList2=[]
 freq={}
 for row in mycursor:
-    topicList.append(row[0])
+    topicList2.append(row[0])
+print(topicList2)
+topicList=[]
+for num in topicList2:
+    sql = "select topic from micro_topic where id=(%s)"
+    val = (str(num),)
+    mycursor.execute(sql, val)
+    for row in mycursor:
+        topicList.append(row[0])
 
 def mapper(str):
     tokens=str.split()

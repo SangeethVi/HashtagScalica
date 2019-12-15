@@ -50,5 +50,15 @@
     {% csrf_token %}
     <input type = "search" name = 'search1'>
   </form>
+
+<h1>{{ "Recent Trending Topics" }}</h1>
+
+<ul>
+{% for topic in trends %}
+    <li>{{ topic }}</li>
+{% endfor %}
+</ul>
+
+
 </div>
 {% endblock %}

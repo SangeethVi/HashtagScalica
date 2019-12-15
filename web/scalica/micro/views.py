@@ -1,3 +1,4 @@
+import redis as redis
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -11,7 +12,7 @@ import six
 
 import rake
 import operator
-import io
+import mapreduce
 
 stoppath = "/home/ksmaybe/code/HashtagScalica/web/scalica/micro/SmartStoplist.txt"
 
@@ -74,6 +75,8 @@ def register(request):
 
 # Authenticated views
 #####################
+
+
 @login_required
 def home(request):
   '''List of recent posts by people I follow'''
@@ -88,8 +91,10 @@ def home(request):
   context = {
     'post_list': post_list,
     'my_post' : my_post,
-    'post_form' : PostForm
+    'post_form' : PostForm,
+    'trends': mapreduce.trend(5)
   }
+
   return render(request, 'micro/home.html', context)
 
 # Allows to post something and shows my most recent posts.
