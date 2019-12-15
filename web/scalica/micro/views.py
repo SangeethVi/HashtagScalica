@@ -9,7 +9,7 @@ from .models import Following, Post, FollowingForm, PostForm, MyUserCreationForm
 
 import six
 
-import rake
+import RAKE.RAKE as rake
 import operator
 import io
 
