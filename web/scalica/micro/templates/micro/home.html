@@ -49,9 +49,9 @@
 <h1>Your Topic Feed</h1>
 {% if sub_postlist %}
   {% for pos in sub_postlist %}
-   <li>
+   <ul>
      {{pos}}
-   </li>
+   </ul>
   {% endfor %}
 {% endif %}
 </div>
@@ -60,5 +60,13 @@
     {% csrf_token %}
     <input type = "search" name = 'search1'>
   </form>
+
+<h1>{{ "Recent Trending Topics" }}</h1>
+
+<ul>
+      {% for topic in trends %}
+          <li>{{ topic }}</li>
+      {% endfor %}
+</ul>
 </div>
 {% endblock %}

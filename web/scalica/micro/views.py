@@ -12,6 +12,7 @@ import six
 import rake
 import operator
 import io
+import mapreduce
 
 stoppath = "/home/sangeethvishnu/depot/web/scalica/micro/SmartStoplist.txt"
 
@@ -111,7 +112,8 @@ def home(request):
     'post_list': post_list,
     'my_post' : my_post,
     'post_form' : PostForm,
-    'sub_postlist' : sub_postlist
+    'sub_postlist' : sub_postlist,
+    'trends': mapreduce.trend(5)
   }
   return render(request, 'micro/home.html', context)
 
