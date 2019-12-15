@@ -85,10 +85,33 @@ def home(request):
     follower_id=request.user.id)]
   post_list = Post.objects.filter(
       user_id__in=follows).order_by('-pub_date')[0:10]
+ 
+  #gets topic id
+  subscribes = Subscription.objects.filter(user = request.user).values()
+  topic_list = []
+  
+  #makes list of topic ids
+  for sub in subscribes:
+    print(sub['topic_id'])
+    topic_list.append(sub['topic_id'])
+  print(topic_list)
+  
+  sub_postlist= []
+
+  #gets posts from topics  
+  for top in topic_list:
+      our_topic = Topic.objects.filter(id = top)
+      for i in our_topic:
+	for pos in i.posts.all():
+	  if str(pos) != "micro.Post.None":
+	    sub_postlist.append(str(pos))
+  print(sub_postlist)
+
   context = {
     'post_list': post_list,
     'my_post' : my_post,
-    'post_form' : PostForm
+    'post_form' : PostForm,
+    'sub_postlist' : sub_postlist
   }
   return render(request, 'micro/home.html', context)
 
@@ -180,9 +203,6 @@ def subscribe(request):
 @login_required
 def search(request):
   if request.method == 'POST':
-    
-    print(request.POST['search1'])
     found = Topic.objects.filter(topic=request.POST['search1'])
-    print(found)
     return render(request, 'micro/search.html', {'found': found})
   

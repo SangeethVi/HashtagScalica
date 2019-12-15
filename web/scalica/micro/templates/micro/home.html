@@ -45,6 +45,16 @@
 {% else %}
   <p>No posts are available.</p>
 {% endif %}
+<div>
+<h1>Your Topic Feed</h1>
+{% if sub_postlist %}
+  {% for pos in sub_postlist %}
+   <li>
+     {{pos}}
+   </li>
+  {% endfor %}
+{% endif %}
+</div>
 <h1>Search for a topic</h1>
   <form  action = "search/" method = "post">
     {% csrf_token %}
