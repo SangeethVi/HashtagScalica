@@ -6,7 +6,7 @@ import time
 import collections
 import multiprocessing
 
-def chunkify(lst,number_of_chunks):
+def partition(lst, number_of_chunks):
     return [ lst[i::number_of_chunks] for i in range(number_of_chunks)]
 
 mydb = mysql.connector.connect(
@@ -19,29 +19,32 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 mycursor.execute("select id,topic from MOCK_DATA limit 100000")
-data=[]
+topicList=[]
 freq={}
 for row in mycursor:
-    data.append(row[1])
+    topicList.append(row[1])
 
 
 
 def mapper(str):
     tokens=str.split()
     return collections.Counter(tokens)
-def reducer(cnt1,cnt2):
-    cnt1.update(cnt2)
-    return cnt1
-def chunk_mapper(chunk):
-    mapped=map(mapper,chunk)
+
+def reducer(counter1, counter2):
+    counter1.update(counter2)
+    return counter1
+
+def pool_mapper(partitionedData):
+    mapped=map(mapper, partitionedData)
     reduced=functools.reduce(reducer,mapped)
     return reduced
+
 #reduced=functools.reduce(reducer,mapped)
 start_time=time.time()
 pool=multiprocessing.Pool(processes=16)
-data_chunks=chunkify(data,number_of_chunks=16)
-print(len(data_chunks))
-mapped=pool.map(chunk_mapper,data_chunks)
+part_data=partition(topicList, number_of_chunks=16)
+print(len(part_data))
+mapped=pool.map(pool_mapper, part_data)
 
 reduced=functools.reduce(reducer,mapped)
 print(reduced.most_common(20))
@@ -55,7 +58,7 @@ def freq_words(data):
     return cnt.most_common(20)
 
 start_time=time.time()
-print(freq_words(data))
+print(freq_words(topicList))
 print("non-mapreduce took",time.time()-start_time," seconds")
 
 
