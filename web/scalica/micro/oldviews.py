@@ -131,13 +131,12 @@ def post(request):
     print(rake_object.run(text))
     x=rake_object.run(text)
   
-    if len(x)==0:
-        x = sortedKeywords[0][0]
-    else:
-	      x = x[0][0]
-    newTopic = Topic(topic = x, post  = new_post)
-    newTopic.save()
+    with open("Output.txt", "a") as text_file:
+    	if len(x)==0:
+	  text_file.write(str(sortedKeywords[0][0])+"\n")   
 
+	else:
+	  text_file.write("Keyword: %s\n" % x[0][0])
     return home(request)
   else:
     form = PostForm
@@ -173,9 +172,6 @@ def subscribe(request):
 @login_required
 def search(request):
   if request.method == 'POST':
-    
-    print(request.POST['search1'])
-    found = Topic.objects.filter(topic=request.POST['search1'])
-    print(found)
+    found = Topic.objects.filter(topic = request.POST)
     return render(request, 'micro/search.html', {'found': found})
   

@@ -48,7 +48,7 @@
 <h1>Search for a topic</h1>
   <form  action = "search/" method = "post">
     {% csrf_token %}
-    <input type = "search">
+    <input type = "search" name = 'search1'>
   </form>
 </div>
 {% endblock %}
