@@ -26,7 +26,7 @@ class Following(models.Model):
 
 class Topic(models.Model):
   topic = models.CharField(max_length = 256, default = '')
-  post = models.ForeignKey(Post)
+  posts = models.ManyToManyField(Post)
 
 class Subscription(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL)

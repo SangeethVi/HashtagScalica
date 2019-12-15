@@ -123,7 +123,6 @@ def post(request):
 
     # sort candidates by score to determine top-scoring keywords
     sortedKeywords = sorted(six.iteritems(keywordcandidates), key=operator.itemgetter(1), reverse=True)
-
     
     for keywords in sortedKeywords:
     	print("Keyword: " +str(keywords) +"\n")
@@ -135,13 +134,21 @@ def post(request):
         x = sortedKeywords[0][0]
     else:
 	      x = x[0][0]
-    newTopic = Topic(topic = x, post  = new_post)
-    newTopic.save()
+    # if topic is already in topics table, just add to posts object
+    if len(Topic.objects.filter(topic = x)) > 0:
+      topics = Topic.objects.get(topic = x)
+      topics.posts.add(new_post)
+    # if topic is not in topics table, create it and add the new post
+    else: 
+      newTopic = Topic(topic = x)
+      newTopic.save()
+      newTopic.posts.add(new_post)
 
     return home(request)
   else:
     form = PostForm
   return render(request, 'micro/post.html', {'form' : form})
+
 
 @login_required
 def follow(request):
