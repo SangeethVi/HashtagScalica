@@ -11,18 +11,18 @@ def partition(lst, number_of_chunks):
 
 mydb = mysql.connector.connect(
     host="localhost",
-    user="hello",
-    passwd='',
-    database='db'
+    user="appserver",
+    passwd='foobarzoot',
+    database='scalica'
 )
 
 mycursor = mydb.cursor()
 
-mycursor.execute("select id,topic from MOCK_DATA limit 100000")
+mycursor.execute("select topic from micro_topic limit 100000")
 topicList=[]
 freq={}
 for row in mycursor:
-    topicList.append(row[1])
+    topicList.append(row[0])
 
 
 

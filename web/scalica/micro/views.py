@@ -9,11 +9,11 @@ from .models import Following, Post, FollowingForm, PostForm, MyUserCreationForm
 
 import six
 
-import RAKE.RAKE as rake
+import rake
 import operator
 import io
 
-stoppath = "/home/sangeethvishnu/depot/web/scalica/micro/SmartStoplist.txt"
+stoppath = "/home/ksmaybe/code/HashtagScalica/web/scalica/micro/SmartStoplist.txt"
 
 rake_object = rake.Rake(stoppath,1, 1, 1)
 

@@ -4,9 +4,9 @@ import os
 
 mydb = mysql.connector.connect(
     host="localhost",
-    user="hello",
-    passwd='',
-    database='db'
+    user="appserver",
+    passwd='foobarzoot',
+    database='scalica'
 )
 
 mycursor = mydb.cursor()
@@ -23,7 +23,7 @@ mycursor = mydb.cursor()
 #   mycursor.execute(sql,val)
 
 # mydb.commit()
-go =1001
+go =1
 with os.scandir('data/') as data:
     for file in data:
         fe='data/'+file.name
@@ -34,9 +34,9 @@ with os.scandir('data/') as data:
                 lst.append(row)
 
         print(file.name)
-        sql="insert into MOCK_DATA (id,topic) values (%s,%s)"
+        sql="insert into micro_topic (topic) values (%s)"
         for row in lst[1:]:
-            val=(str(go),row[1])
+            val=(row[1],)
             mycursor.execute(sql,val)
             go+=1
 mydb.commit()
