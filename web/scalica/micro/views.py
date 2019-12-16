@@ -189,17 +189,21 @@ def follow(request):
   return render(request, 'micro/follow.html', {'form' : form})
 
 #allows you to subscribe to a topic
+
 @login_required
 def subscribe(request):
   if request.method == 'POST':
-    form = SubscribeForm(request.POST)
-    new_sub = form.save(commit=False)
-    new_sub.user = request.user
-    new_sub.save()
-    return home(request)
-  else:
-    form = SubscribeForm
-  return render(request, 'micro/subscribe.html', {'form': form})
+    try:
+      found = Topic.objects.get(topic=request.POST['subscr'])
+      new_sub = Subscription(user = request.user, topic = found)
+      new_sub.save()
+      return home(request)
+    except Topic.DoesNotExist:
+      return home(request)
+  else :
+    found = False
+    return render(request, 'micro/subscribe.html')
+
 
 #allows you to search for a topic
 @login_required

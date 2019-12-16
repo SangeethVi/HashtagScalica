@@ -2,6 +2,7 @@
 {% block content %}
 <form action="/micro/subscribe/" method="post">
   {% csrf_token %}
- Subscribe:  <input type="search" name="subscr">
+  {{ form }}
+  <input type="submit" value="Submit" />
 </form>
 {% endblock %}

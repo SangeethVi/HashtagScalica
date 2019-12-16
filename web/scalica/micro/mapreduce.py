@@ -61,3 +61,19 @@ def trend(number):
     for item in reduced.most_common(number):
         trend.append(item[0])
     return trend
+def down_field():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="appserver",
+        passwd='foobarzoot',
+        database='scalica'
+    )
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("select id,topic from micro_topic limit 100000")
+    topicList2 = []
+    
+    for row in mycursor:
+        topicList2.append(row)
+    return topicList

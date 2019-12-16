@@ -27,7 +27,7 @@ class Following(models.Model):
 class Topic(models.Model):
   topic = models.CharField(max_length = 256, default = '')
   posts = models.ManyToManyField(Post)
-
+  
 class Subscription(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL)
   topic = models.ForeignKey(Topic)
@@ -59,11 +59,11 @@ class SubscribeForm(ModelForm):
     model = Subscription
 #    fields = ('topic',)
     exclude = ('user',)
-    def __init__(self, *args, **kwargs):
-         super(SubscribeForm, self).__init__(*args, **kwargs)
-         self.fields['topic']=forms.ModelChoiceField(queryset=Topic.objects.all())
-    def __unicode__(self):
-	return str(self.topic.topic)	
+#    def __init__(self, *args, **kwargs):
+#        super(SubscribeForm, self).__init__(*args, **kwargs)
+#         self.fields['topic']=forms.ModelChoiceField(queryset=mapreduce.down_field())
+#    def __unicode__(self):
+#	return str(self.topic.topic)	
 
 class MyUserCreationForm(UserCreationForm):
   class Meta(UserCreationForm.Meta):
