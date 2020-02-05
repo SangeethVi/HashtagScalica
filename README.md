@@ -15,11 +15,3 @@ Here you will be greeted with a text field. Enter in the exact, full name of a t
 If you head back to the homepage, you should see posts related to that topic in your Topic Feed, as well as the name of the user who posted them. 
 
 If you encounter a URL error, please go back to /micro and repeat your action again.
-
-Alterations:
-We are using RAKE instead of IBM Watson API, as Watson is not compatible with Python 2.7
-We altered our data model, as we were unable to attach topics to the Post model since this gave us an error, and there is a posts field in the topic model that was added.
-
-One of the limitations is that posts in the topic feed will only show 20 characters of a post to avoid cluttering up the UI.
-We did not implement the ability to click on a trending topic to subscribe, as we did not have time.
-
